@@ -4,6 +4,7 @@ import { BreedsModule } from './breeds/breeds.module';
 import { CatsModule } from './cats/cats.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ClientesModule } from './clientes/clientes.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
     BreedsModule,
     UsersModule,
     AuthModule,
+    ClientesModule,
   ],
   controllers: [],
   providers: [],
