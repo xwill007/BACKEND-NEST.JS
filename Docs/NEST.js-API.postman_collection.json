@@ -1,0 +1,620 @@
+{
+	"info": {
+		"_postman_id": "nest-js-cats-api",
+		"name": "NEST.js - Cats Backend API",
+		"description": "Colección completa de endpoints para la API de NEST.js con MySQL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.token) {",
+									"        pm.collectionVariables.set('token', response.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Santiago Sierra\",\n  \"email\": \"santiago@test.com\",\n  \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Registrar un nuevo usuario en el sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.token) {",
+									"        pm.collectionVariables.set('token', response.token);",
+									"        console.log('Token guardado:', response.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"santiago@test.com\",\n  \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Iniciar sesión y obtener token JWT"
+					},
+					"response": []
+				},
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"profile"
+							]
+						},
+						"description": "Obtener perfil del usuario autenticado"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints de autenticación y autorización"
+		},
+		{
+			"name": "Cats",
+			"item": [
+				{
+					"name": "Create Cat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Michi\",\n  \"age\": 3,\n  \"breed\": \"Siamés\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cats",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cats"
+							]
+						},
+						"description": "Crear un nuevo gato"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Cats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cats",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cats"
+							]
+						},
+						"description": "Obtener todos los gatos"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cat by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cats/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cats",
+								"1"
+							]
+						},
+						"description": "Obtener un gato por ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cat",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Michi Actualizado\",\n  \"age\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cats/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cats",
+								"1"
+							]
+						},
+						"description": "Actualizar un gato existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Cat",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cats/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cats",
+								"1"
+							]
+						},
+						"description": "Eliminar un gato"
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD de gatos"
+		},
+		{
+			"name": "Breeds",
+			"item": [
+				{
+					"name": "Create Breed",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Persa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/breeds",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"breeds"
+							]
+						},
+						"description": "Crear una nueva raza"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Breeds",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/breeds",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"breeds"
+							]
+						},
+						"description": "Obtener todas las razas"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Breed by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/breeds/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"breeds",
+								"1"
+							]
+						},
+						"description": "Obtener una raza por ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Breed",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Persa Himalayo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/breeds/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"breeds",
+								"1"
+							]
+						},
+						"description": "Actualizar una raza existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Breed",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/breeds/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"breeds",
+								"1"
+							]
+						},
+						"description": "Eliminar una raza"
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD de razas de gatos"
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Nuevo Usuario\",\n  \"email\": \"nuevo@test.com\",\n  \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Crear un nuevo usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Obtener todos los usuarios"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						},
+						"description": "Obtener un usuario por ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Usuario Actualizado\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						},
+						"description": "Actualizar un usuario existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						},
+						"description": "Eliminar un usuario"
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD de usuarios"
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Create Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Cliente Ejemplo\",\n  \"email\": \"cliente@test.com\",\n  \"phone\": \"3001234567\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clientes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clientes"
+							]
+						},
+						"description": "Crear un nuevo cliente"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clientes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clientes"
+							]
+						},
+						"description": "Obtener todos los clientes"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cliente by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clientes/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clientes",
+								"1"
+							]
+						},
+						"description": "Obtener un cliente por ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cliente",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Cliente Actualizado\",\n  \"phone\": \"3009876543\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clientes/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clientes",
+								"1"
+							]
+						},
+						"description": "Actualizar un cliente existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clientes/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clientes",
+								"1"
+							]
+						},
+						"description": "Eliminar un cliente"
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD de clientes"
+		}
+	]
+}
